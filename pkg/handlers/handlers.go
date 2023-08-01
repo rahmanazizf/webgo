@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/rahmanazizf/basicwgo/pkg/config"
+	"github.com/rahmanazizf/basicwgo/pkg/models"
 	"github.com/rahmanazizf/basicwgo/pkg/renderer"
 )
 
@@ -24,9 +25,11 @@ func NewHandlers(r *Repository) {
 }
 
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
-	renderer.RenderTemplate(w, "home.page.tmpl")
+	// implement some logic here
+	stringMap := map[string]string{"random": "hello from handlers"}
+	renderer.RenderTemplate(w, "home.page.tmpl", &models.TemplateData{StringMap: stringMap})
 }
 
 func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
-	renderer.RenderTemplate(w, "about.page.tmpl")
+	renderer.RenderTemplate(w, "about.page.tmpl", &models.TemplateData{})
 }

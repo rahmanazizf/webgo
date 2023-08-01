@@ -9,6 +9,7 @@ import (
 	"text/template"
 
 	"github.com/rahmanazizf/basicwgo/pkg/config"
+	"github.com/rahmanazizf/basicwgo/pkg/models"
 )
 
 // declare app to access the same app in the main function
@@ -18,7 +19,12 @@ func NewTemplates(a *config.AppConfig) {
 	app = a
 }
 
-func RenderTemplate(w http.ResponseWriter, filename string) {
+func AddDefaultData(td *models.TemplateData) *models.TemplateData {
+	return td
+}
+
+// RenderTemplate write everything to browser
+func RenderTemplate(w http.ResponseWriter, filename string, td *models.TemplateData) {
 	var tmpl map[string]*template.Template
 	var err error
 	if app.UseCache {
@@ -39,7 +45,9 @@ func RenderTemplate(w http.ResponseWriter, filename string) {
 	}
 	// execute using buffer
 	buf := new(bytes.Buffer)
-	err = tc.Execute(buf, nil)
+	data := AddDefaultData(td)
+	// data is passed to template
+	err = tc.Execute(buf, data)
 	if err != nil {
 		log.Println("Error while executing template")
 		fmt.Println(err)
