@@ -7,14 +7,29 @@ import (
 	"net/http"
 	"path/filepath"
 	"text/template"
+
+	"github.com/rahmanazizf/basicwgo/pkg/config"
 )
 
+// declare app to access the same app in the main function
+var app *config.AppConfig
+
+func NewTemplates(a *config.AppConfig) {
+	app = a
+}
+
 func RenderTemplate(w http.ResponseWriter, filename string) {
-	// create template cache
-	tmpl, err := CreateTemplateCache()
-	if err != nil {
-		log.Println("error while creating template cache")
-		fmt.Println(err)
+	var tmpl map[string]*template.Template
+	var err error
+	if app.UseCache {
+		tmpl = app.TemplateCache
+	} else {
+		// create template cache
+		tmpl, err = CreateTemplateCache()
+		if err != nil {
+			log.Println("error while creating template cache")
+			fmt.Println(err)
+		}
 	}
 	// get the requested template
 	tc, tcExist := tmpl[filename]

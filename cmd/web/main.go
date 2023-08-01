@@ -15,6 +15,7 @@ const portNumber = ":8081"
 
 func main() {
 	var app config.AppConfig
+	app.UseCache = false
 
 	tc, err := renderer.CreateTemplateCache()
 	if err != nil {
@@ -22,6 +23,9 @@ func main() {
 	}
 
 	app.TemplateCache = tc
+
+	// pass template cache to renderer
+	renderer.NewTemplates(&app)
 
 	http.HandleFunc("/", handlers.Home)
 	http.HandleFunc("/about", handlers.About)
