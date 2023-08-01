@@ -27,8 +27,12 @@ func main() {
 	// pass template cache to renderer
 	renderer.NewTemplates(&app)
 
-	http.HandleFunc("/", handlers.Home)
-	http.HandleFunc("/about", handlers.About)
+	// allow handlers to access app
+	repo := handlers.NewRepo(&app)
+	handlers.NewHandlers(repo)
+
+	http.HandleFunc("/", handlers.Repo.Home)
+	http.HandleFunc("/about", handlers.Repo.About)
 
 	fmt.Println(fmt.Sprintf("Starting the application on localhost%s", portNumber))
 	_ = http.ListenAndServe(portNumber, nil)
