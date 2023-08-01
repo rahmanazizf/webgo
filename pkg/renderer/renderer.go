@@ -40,7 +40,7 @@ func RenderTemplate(w http.ResponseWriter, filename string) {
 
 // CreateTemplateCache to create template cache first
 func CreateTemplateCache() (map[string]*template.Template, error) {
-	tc := make(map[string]*template.Template)
+	tc := map[string]*template.Template{}
 
 	// get all page tmpl files
 	pages, err := filepath.Glob(`C:\Users\USER\Desktop\go\webgo\templates\*.page.tmpl`)
