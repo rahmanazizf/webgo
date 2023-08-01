@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/rahmanazizf/basicwgo/cmd/pkg/handlers"
+	"github.com/rahmanazizf/basicwgo/pkg/handlers"
 )
 
 // use const instead of var if you want to keep a variable constant
